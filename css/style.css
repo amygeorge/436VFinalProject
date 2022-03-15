@@ -3,6 +3,7 @@ body {
   font-size: 1rem;
 }
 
+/* color variables */
 .project-intro {
   text-align: center;
   margin: 5rem 0;
@@ -24,6 +25,7 @@ body {
   padding: 0 15rem;
 }
 
+/* headings */
 h1 {
   font-size: 48px;
 }
@@ -40,6 +42,24 @@ p {
   line-height: 33px;
 }
 
-/* color variables */
+/* tooltip */
+#tooltip {
+  position: absolute;
+  display: none;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  min-width: 302px;
+}
+#tooltip .tooltip-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+#tooltip ul {
+  margin: 5px 0 0 0;
+  padding-left: 20px;
+  font-size: 14px;
+}
 
 /*# sourceMappingURL=style.css.map */
