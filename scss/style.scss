@@ -1,0 +1,53 @@
+body {
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 1rem;
+}
+
+.project-intro {
+    text-align: center;
+    margin: 5rem 0;
+    .title-text {
+        display: inline-block;
+        width: 343px;
+        padding-left: 0.5em;
+        text-align: left;
+        
+    }
+
+    .description {
+        display: inline-block;
+        width: 963px;
+        font-style: normal;
+        margin: 4rem 0;
+    }
+}
+
+.section {
+    padding: 0 15rem;
+}
+
+
+h1 {
+    font-size: 48px;
+}
+
+h6 {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    margin: 0 0;
+}
+
+p {
+    font-size: 24px;
+    line-height: 33px;
+}
+
+/* color variables */
+$green: #3FDD58;
+$purple: #7137BE;
+$orange: #FFAC33;
+$red: #FF4747;
+$blue: #80C1F2;
+$gray-light: #E7E7E7;
+$gray: #C4C4C4;

@@ -1,0 +1,45 @@
+body {
+  font-family: "Roboto", "sans-serif";
+  font-size: 1rem;
+}
+
+.project-intro {
+  text-align: center;
+  margin: 5rem 0;
+}
+.project-intro .title-text {
+  display: inline-block;
+  width: 343px;
+  padding-left: 0.5em;
+  text-align: left;
+}
+.project-intro .description {
+  display: inline-block;
+  width: 963px;
+  font-style: normal;
+  margin: 4rem 0;
+}
+
+.section {
+  padding: 0 15rem;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h6 {
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0 0;
+}
+
+p {
+  font-size: 24px;
+  line-height: 33px;
+}
+
+/* color variables */
+
+/*# sourceMappingURL=style.css.map */
