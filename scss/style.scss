@@ -1,0 +1,77 @@
+body {
+    font-family: 'Roboto', 'sans-serif';
+    font-size: 1rem;
+}
+
+/* color variables */
+$green: #3FDD58;
+$purple: #7137BE;
+$orange: #FFAC33;
+$red: #FF4747;
+$blue: #80C1F2;
+$gray-light: #E7E7E7;
+$gray: #C4C4C4;
+$white: #fff;
+$black: #000;
+
+.project-intro {
+    text-align: center;
+    margin: 5rem 0;
+
+    .title-text {
+        display: inline-block;
+        width: 343px;
+        padding-left: 0.5em;
+        text-align: left;
+
+    }
+
+    .description {
+        display: inline-block;
+        width: 963px;
+        font-style: normal;
+        margin: 4rem 0;
+    }
+}
+
+.section {
+    padding: 0 15rem;
+}
+
+/* headings */
+h1 {
+    font-size: 48px;
+}
+
+h6 {
+    margin: 0 0;
+    font-size: 24px;
+    line-height: 33px;
+    font-weight: 400;
+}
+
+p {
+    font-size: 18px;
+}
+
+/* tooltip */
+#tooltip {
+    position: absolute;
+    display: none;
+    padding: 0.5rem 1rem;
+    background: $white;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    min-width: 302px;
+
+    .tooltip-title {
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    ul {
+        margin: 5px 0 0 0;
+        padding-left: 20px;
+        font-size: 14px;
+    }
+}

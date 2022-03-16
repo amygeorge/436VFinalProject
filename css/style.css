@@ -1,0 +1,64 @@
+body {
+  font-family: "Roboto", "sans-serif";
+  font-size: 1rem;
+}
+
+/* color variables */
+.project-intro {
+  text-align: center;
+  margin: 5rem 0;
+}
+.project-intro .title-text {
+  display: inline-block;
+  width: 343px;
+  padding-left: 0.5em;
+  text-align: left;
+}
+.project-intro .description {
+  display: inline-block;
+  width: 963px;
+  font-style: normal;
+  margin: 4rem 0;
+}
+
+.section {
+  padding: 0 15rem;
+}
+
+/* headings */
+h1 {
+  font-size: 48px;
+}
+
+h6 {
+  margin: 0 0;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
+}
+
+p {
+  font-size: 18px;
+}
+
+/* tooltip */
+#tooltip {
+  position: absolute;
+  display: none;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  min-width: 302px;
+}
+#tooltip .tooltip-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+#tooltip ul {
+  margin: 5px 0 0 0;
+  padding-left: 20px;
+  font-size: 14px;
+}
+
+/*# sourceMappingURL=style.css.map */
