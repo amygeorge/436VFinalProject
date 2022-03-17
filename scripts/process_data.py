@@ -72,12 +72,34 @@ column_mapping = {
 }
 # TODO: RACE: differentiate non-white and undefined/prefer not to say answers
 # TODO: USED: remove rows with undefined/prefer not to say answers?
-# TODO: START_AGE: earliest start age for all categories (e.g. if started e-cig earliest then use e-cig start age)
 # TODO: remove nrows (just testing with 5 rows for now)
 
 raw_data = pd.read_csv('../data/nyts2020.csv', nrows=5, usecols=list(column_mapping.keys()))
+# rename columns from Q<Number> to something more meaningful 
 data = raw_data.rename(column_mapping, axis=1)
 # print('raw data', raw_data)
 # print('data', data)
 
+# get a list of all the column names
+col_names = list(column_mapping.values())
+
+# PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
+#
+#   1) filter for "other" start_age columns only
+#       (i.e. ones that are not cigarette and e-cigarette)
+start_age_other_col_names = [name for name in col_names if name.startswith('start_age') and not name.endswith('cigarette')]
+
+#   2) create a dataframe with only start_age columns,
+#       convert each start age values to numeric,
+#       find the min age for each row
+start_ages_other = data[start_age_other_col_names].apply(pd.to_numeric, errors='coerce')
+min_start_age_other = start_ages_other.min(axis=1, numeric_only=True)
+
+#   3) drop start_age columns that we've already consolidated into "others"
+data = data.drop(start_age_other_col_names, axis=1)
+data['start_age_other'] = min_start_age_other
+
+# print('processed data', data)
+# print('data (ages)', start_ages_other)
+# print('min_start_age', min_start_age_other)
 data.to_csv('../data/nyts2020_processed.csv', encoding='utf-8', index=False)
