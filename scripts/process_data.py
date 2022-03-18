@@ -89,6 +89,10 @@ data['invalid_data'] = data[col_names].eq('.Z').any(axis=1)
 data = data[data['invalid_data'] == False]
 data = data.drop('invalid_data', axis=1)
 
+# PROCESS age data: map age values to actual age
+age_mapping = { 1: 9, 2: 10, 3: 11, 4: 12, 5: 13, 6: 14, 7: 15, 8: 16, 9: 17, 10: 18, 11: 19 }
+data['age'] = data['age'].map(age_mapping)
+
 # PROCESS sex data: map numeric values to Male, Female
 data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
 
@@ -111,6 +115,10 @@ min_start_age_other = start_ages_other.min(axis=1, numeric_only=True)
 #   3) drop start_age columns that we've already consolidated into "others"
 data = data.drop(start_age_other_col_names, axis=1)
 data['start_age_other'] = min_start_age_other
+
+#   4) map age values to actual age
+start_age_mapping = { 1: 8, 2: 9, 3: 10, 4: 11, 5: 12, 6: 13, 7: 14, 8: 15, 9: 16, 10: 17, 11: 18, 12: 19 }
+data = data.replace({name: start_age_mapping for name in data if name.startswith('start_age')})
 
 # PROCESS household_exposure data: consolidate tobacco types into cigarette, e-cigarette, other
 #
