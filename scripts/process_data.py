@@ -94,6 +94,9 @@ data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
 data['race'] = data['race'].map({ 1: 'Caucasian' })
 data['race'] = data['race'].fillna('Non-Caucasian')
 
+# PROCESS used data: transform values from 1 and 2 to boolean
+data = data.replace({name:{ 1: True, 2: False } for name in data if name.startswith('used')})
+
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
