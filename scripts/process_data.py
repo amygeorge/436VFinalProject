@@ -92,6 +92,10 @@ data = data.drop('invalid_data', axis=1)
 # PROCESS sex data: map numeric values to Male, Female
 data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
 
+# PROCESS race data: map race values to Caucasian/Non-Caucasian
+data['race'] = data['race'].map({ 1: 'Caucasian' })
+data['race'] = data['race'].fillna('Non-Caucasian')
+
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
