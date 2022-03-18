@@ -87,21 +87,30 @@ data = data.drop('invalid_data', axis=1)
 age_mapping = { 1: 9, 2: 10, 3: 11, 4: 12, 5: 13, 6: 14, 7: 15, 8: 16, 9: 17, 10: 18, 11: 19 }
 data['age'] = data['age'].map(age_mapping)
 
+
 # PROCESS sex data: map numeric values to Male, Female
 data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
+
 
 # PROCESS race data: map race values to Caucasian/Non-Caucasian
 data['race'] = data['race'].map({ 1: 'Caucasian' })
 data['race'] = data['race'].fillna('Non-Caucasian')
 
-# PROCESS used data: transform values from 1 and 2 to boolean
+
+# PROCESS used data: map values from 1 and 2 to boolean
 data = data.replace({name:{ 1: True, 2: False } for name in data if name.startswith('used')})
+
+
+# PROCESS motivation data: map values from 1 and 2 to boolean
+data = data.replace({name:{ '1': True } for name in data if name.startswith('motivation')})
+
 
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
 #       (i.e. ones that are not cigarette and e-cigarette)
 start_age_other_col_names = [name for name in col_names if name.startswith('start_age') and not name.endswith('cigarette')]
+
 
 #   2) create a dataframe with only (other) start_age columns,
 #       convert each start age values to numeric,
@@ -116,6 +125,7 @@ data['start_age_other'] = min_start_age_other
 #   4) map age values to actual age
 start_age_mapping = { 1: 8, 2: 9, 3: 10, 4: 11, 5: 12, 6: 13, 7: 14, 8: 15, 9: 16, 10: 17, 11: 18, 12: 19 }
 data = data.replace({name: start_age_mapping for name in data if name.startswith('start_age')})
+
 
 # PROCESS household_exposure data: consolidate tobacco types into cigarette, e-cigarette, other
 #
@@ -135,6 +145,7 @@ data = data.drop(household_exposure_other_col_names, axis=1)
 data = data.replace({name:{ '.N': False, '1': True } for name in data if name.startswith('household_exposure')})
 new_household_exposure_col_names = [name for name in data if name.startswith('household_exposure')]
 data[new_household_exposure_col_names] = data[new_household_exposure_col_names].fillna(False)
+
 
 # convert data back to csv
 data.to_csv('../data/nyts2020_processed.csv', encoding='utf-8', index=False)
