@@ -89,6 +89,9 @@ data['invalid_data'] = data[col_names].eq('.Z').any(axis=1)
 data = data[data['invalid_data'] == False]
 data = data.drop('invalid_data', axis=1)
 
+# PROCESS sex data: map numeric values to Male, Female
+data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
+
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
