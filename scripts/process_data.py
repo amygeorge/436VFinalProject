@@ -105,6 +105,11 @@ data = data.replace({name:{ 1: True, 2: False } for name in data if name.startsw
 data = data.replace({name:{ '1': True } for name in data if name.startswith('motivation')})
 
 
+# PROCESS harm data: map numerical values to more meaningful 
+harm_mapping = { '001': 'No harm', '002': 'Little harm', '003': 'Some harm', '004': 'A lot of harm' }
+data = data.replace({name:harm_mapping for name in data if name.startswith('harm')})
+
+
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
