@@ -70,16 +70,10 @@ column_mapping = {
 # 18) social media ads
     'Q106': 'ads_e-cigarette_social-media', # Q106: How often do you see posts related to e-cigarettes when you go on social media (such as YouTube, Instagram, Snapchat, Twitter, or Facebook)?
 }
-# TODO: RACE: differentiate non-white and undefined/prefer not to say answers
-# TODO: USED: remove rows with undefined/prefer not to say answers?
-# TODO: remove nrows (just testing with 5 rows for now)
-# # TODO: remove
-# pd.set_option('display.max_columns', None)
-raw_data = pd.read_csv('../data/nyts2020.csv', nrows=5100, usecols=list(column_mapping.keys()))
+
+raw_data = pd.read_csv('../data/nyts2020.csv', usecols=list(column_mapping.keys()))
 # rename columns from Q<Number> to something more meaningful 
 data = raw_data.rename(column_mapping, axis=1)
-# print('raw data', raw_data)
-# print('data', data)
 
 # get a list of all the column names
 col_names = list(column_mapping.values())
@@ -138,4 +132,6 @@ data = data.drop(household_exposure_other_col_names, axis=1)
 data = data.replace({name:{ '.N': False, '1': True } for name in data if name.startswith('household_exposure')})
 new_household_exposure_col_names = [name for name in data if name.startswith('household_exposure')]
 data[new_household_exposure_col_names] = data[new_household_exposure_col_names].fillna(False)
+
+# convert data back to csv
 data.to_csv('../data/nyts2020_processed.csv', encoding='utf-8', index=False)
