@@ -14,7 +14,7 @@ column_mapping = {
 # 5) household exposure
     'Q114A': 'household_exposure_cigarette', # Q114A: Smoke cigarettes: Does anyone who lives with you now...?
     'Q114B': 'household_exposure_cigar,cigarillo,little-cigar', # Q114B: Smoke cigars, cigarillos, or little cigars: Does anyone who lives with you now...? (Select one or more)
-    'Q114C': 'household_exposure_chewing-tobacco,snuff,dipcigarette', # Q114C: Use chewing tobacco, snuff, or dip: Does anyone who lives with you now...?
+    'Q114C': 'household_exposure_chewing-tobacco,snuff,dip', # Q114C: Use chewing tobacco, snuff, or dip: Does anyone who lives with you now...?
     'Q114D': 'household_exposure_e-cigarette', # Q114A: Smoke e-cigarettes: Does anyone who lives with you now...?
     'Q114E': 'household_exposure_hookah,waterpipe', # Q114E: Smoke tobacco in a hookah or waterpipe: Does anyone who lives with you now...?
     'Q114F': 'household_exposure_pipe-filled-with-tobacco-not-hookah', # Q114F: Smoke pipes filled with tobacco (not hookah or waterpipes): Does anyone who lives with you now...?
@@ -73,8 +73,9 @@ column_mapping = {
 # TODO: RACE: differentiate non-white and undefined/prefer not to say answers
 # TODO: USED: remove rows with undefined/prefer not to say answers?
 # TODO: remove nrows (just testing with 5 rows for now)
-
-raw_data = pd.read_csv('../data/nyts2020.csv', nrows=5, usecols=list(column_mapping.keys()))
+# # TODO: remove
+# pd.set_option('display.max_columns', None)
+raw_data = pd.read_csv('../data/nyts2020.csv', nrows=5100, usecols=list(column_mapping.keys()))
 # rename columns from Q<Number> to something more meaningful 
 data = raw_data.rename(column_mapping, axis=1)
 # print('raw data', raw_data)
@@ -83,13 +84,18 @@ data = raw_data.rename(column_mapping, axis=1)
 # get a list of all the column names
 col_names = list(column_mapping.values())
 
+# filter out invalid data
+data['invalid_data'] = data[col_names].eq('.Z').any(axis=1)
+data = data[data['invalid_data'] == False]
+data = data.drop('invalid_data', axis=1)
+
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
 #       (i.e. ones that are not cigarette and e-cigarette)
 start_age_other_col_names = [name for name in col_names if name.startswith('start_age') and not name.endswith('cigarette')]
 
-#   2) create a dataframe with only start_age columns,
+#   2) create a dataframe with only (other) start_age columns,
 #       convert each start age values to numeric,
 #       find the min age for each row
 start_ages_other = data[start_age_other_col_names].apply(pd.to_numeric, errors='coerce')
@@ -99,7 +105,22 @@ min_start_age_other = start_ages_other.min(axis=1, numeric_only=True)
 data = data.drop(start_age_other_col_names, axis=1)
 data['start_age_other'] = min_start_age_other
 
-# print('processed data', data)
-# print('data (ages)', start_ages_other)
-# print('min_start_age', min_start_age_other)
+# PROCESS household_exposure data: consolidate tobacco types into cigarette, e-cigarette, other
+#
+#   1) filter for "other" start_age columns only
+#       (i.e. ones that are not cigarette and e-cigarette)
+household_exposure_other_col_names = [name for name in col_names if name.startswith('household_exposure') and not (name.endswith('cigarette') or name.endswith('None'))]
+
+#   2) create a dataframe with only (other) household_exposure columns,
+#       convert each start age values to numeric,
+#       find the min age for each row
+data['household_exposure_other'] = data[household_exposure_other_col_names].eq('1').any(axis=1)
+
+#   3) drop household_exposure columns that we've already consolidated into "others"
+data = data.drop(household_exposure_other_col_names, axis=1)
+
+#   4) convert values to boolean
+data = data.replace({name:{ '.N': False, '1': True } for name in data if name.startswith('household_exposure')})
+new_household_exposure_col_names = [name for name in data if name.startswith('household_exposure')]
+data[new_household_exposure_col_names] = data[new_household_exposure_col_names].fillna(False)
 data.to_csv('../data/nyts2020_processed.csv', encoding='utf-8', index=False)
