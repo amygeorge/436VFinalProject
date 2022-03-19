@@ -106,8 +106,12 @@ data = data.replace({name:{ '1': True } for name in data if name.startswith('mot
 
 
 # PROCESS harm_occasional data: map numerical values to more meaningful 
-harm_mapping = { '001': 'No harm', '002': 'Little harm', '003': 'Some harm', '004': 'A lot of harm' }
-data = data.replace({name:harm_mapping for name in data if name.startswith('harm_occasional')})
+harm_occasional_mapping = { '001': 'No harm', '002': 'Little harm', '003': 'Some harm', '004': 'A lot of harm' }
+data = data.replace({name: harm_occasional_mapping for name in data if name.startswith('harm_occasional')})
+
+# PROCESS harm_addictiveness data: map numerical values to more meaningful 
+harm_addictiveness_mapping = { '001': 'Less addictive', '002': 'Equally addictive', '003': 'More addictive', '004': 'Never heard of product', '005': 'Not enough info on product' }
+data = data.replace({name: harm_addictiveness_mapping for name in data if name.startswith('harm_addictiveness')})
 
 
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
