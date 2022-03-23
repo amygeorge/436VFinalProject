@@ -106,7 +106,7 @@ data = mapColumnValues({ 1: True, 2: False }, data, 'used')
     
 
 # PROCESS motivation data: map values from 1 and 2 to boolean
-data = mapColumnValues({ '1': True }, data, 'motivation')
+data = mapColumnValues({ '1': True, '.S': 'N/A' }, data, 'motivation')
 
 
 # PROCESS harm_occasional data: map numerical values to something more meaningful 
@@ -164,6 +164,46 @@ popularity_mapping = {
     '011': 10
 }
 data = mapColumnValues(popularity_mapping, data, 'popularity')
+
+
+# PROCESS ads data: map numerical to something more meaningful 
+ads_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Does not use this medium',
+    '002': 'Never',
+    '003': 'Rarely',
+    '004': 'Sometimes',
+    '005': 'Most of the time',
+    '006': 'Always'
+}
+data = mapColumnValues(ads_mapping, data, 'ads')
+
+
+# PROCESS ease of access data: map numerical to something more meaningful 
+ease_of_access_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Easy',
+    '002': 'Somewhat easy',
+    '003': 'Not easy at all'
+}
+data = mapColumnValues(ease_of_access_mapping, data, 'ease')
+
+
+# PROCESS quit_for_good data: map numerical to something more meaningful 
+quit_for_good_mapping =  {
+    '.N': 'Not Answered',
+    '.S': 'N/A',
+    '.Z': 'N/A',
+    '001': 'Did not try to quit',
+    '002': '1 time',
+    '003': '2 times',
+    '004': '3 to 5 times',
+    '005': '6 to 9 times',
+    '006': '10 or more times'
+}
+data = mapColumnValues(quit_for_good_mapping, data, 'quit_for_good')
 
 
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
