@@ -87,18 +87,131 @@ data = data.drop('invalid_data', axis=1)
 age_mapping = { 1: 9, 2: 10, 3: 11, 4: 12, 5: 13, 6: 14, 7: 15, 8: 16, 9: 17, 10: 18, 11: 19 }
 data['age'] = data['age'].map(age_mapping)
 
+
 # PROCESS sex data: map numeric values to Male, Female
 data['sex'] = data['sex'].map({ 1: 'Male', 2: 'Female' })
+
 
 # PROCESS race data: map race values to Caucasian/Non-Caucasian
 data['race'] = data['race'].map({ 1: 'Caucasian' })
 data['race'] = data['race'].fillna('Non-Caucasian')
+
+
+def mapColumnValues(mapping, data, col_name_prefix):
+    return data.replace({name:mapping for name in data if name.startswith(col_name_prefix)})
+
+
+# PROCESS used data: map values from 1 and 2 to boolean
+data = mapColumnValues({ 1: True, 2: False }, data, 'used')
+    
+
+# PROCESS motivation data: map values from 1 and 2 to boolean
+data = mapColumnValues({ '1': True, '.S': 'N/A' }, data, 'motivation')
+
+
+# PROCESS harm_occasional data: map numerical values to something more meaningful 
+harm_occasional_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'No harm',
+    '002': 'Little harm',
+    '003': 'Some harm',
+    '004': 'A lot of harm'
+}
+data = mapColumnValues(harm_occasional_mapping, data, 'harm_occasional')
+
+
+# PROCESS harm_addictiveness data: map numerical values to something more meaningful 
+harm_addictiveness_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Less addictive',
+    '002': 'Equally addictive',
+    '003': 'More addictive',
+    '004': 'Never heard of product',
+    '005': 'Not enough info on product'
+}
+data = mapColumnValues(harm_addictiveness_mapping, data, 'harm_addictiveness')
+
+
+# PROCESS harm_low_nicotine data: map numerical to something more meaningful 
+harm_low_nicotine_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Much less harmful',
+    '002': 'Slightly less harmful',
+    '003': 'Equally harmful',
+    '004': 'Slightly more harmful',
+    '005': 'Much more harmful'
+}
+data = mapColumnValues(harm_low_nicotine_mapping, data, 'harm_low_nicotine')
+
+
+# PROCESS popularity data: map numerical to something more meaningful 
+popularity_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 0,
+    '002': 1,
+    '003': 2,
+    '004': 3,
+    '005': 4,
+    '006': 5,
+    '007': 6,
+    '008': 7,
+    '009': 8,
+    '010': 9,
+    '011': 10
+}
+data = mapColumnValues(popularity_mapping, data, 'popularity')
+
+
+# PROCESS ads data: map numerical to something more meaningful 
+ads_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Does not use this medium',
+    '002': 'Never',
+    '003': 'Rarely',
+    '004': 'Sometimes',
+    '005': 'Most of the time',
+    '006': 'Always'
+}
+data = mapColumnValues(ads_mapping, data, 'ads')
+
+
+# PROCESS ease of access data: map numerical to something more meaningful 
+ease_of_access_mapping = {
+    '.N': 'Not Answered',
+    '.Z': 'N/A',
+    '001': 'Easy',
+    '002': 'Somewhat easy',
+    '003': 'Not easy at all'
+}
+data = mapColumnValues(ease_of_access_mapping, data, 'ease')
+
+
+# PROCESS quit_for_good data: map numerical to something more meaningful 
+quit_for_good_mapping =  {
+    '.N': 'Not Answered',
+    '.S': 'N/A',
+    '.Z': 'N/A',
+    '001': 'Did not try to quit',
+    '002': '1 time',
+    '003': '2 times',
+    '004': '3 to 5 times',
+    '005': '6 to 9 times',
+    '006': '10 or more times'
+}
+data = mapColumnValues(quit_for_good_mapping, data, 'quit_for_good')
+
 
 # PROCESS start_age data: consolidate tobacco types into cigarette, e-cigarette, other
 #
 #   1) filter for "other" start_age columns only
 #       (i.e. ones that are not cigarette and e-cigarette)
 start_age_other_col_names = [name for name in col_names if name.startswith('start_age') and not name.endswith('cigarette')]
+
 
 #   2) create a dataframe with only (other) start_age columns,
 #       convert each start age values to numeric,
@@ -111,8 +224,25 @@ data = data.drop(start_age_other_col_names, axis=1)
 data['start_age_other'] = min_start_age_other
 
 #   4) map age values to actual age
-start_age_mapping = { 1: 8, 2: 9, 3: 10, 4: 11, 5: 12, 6: 13, 7: 14, 8: 15, 9: 16, 10: 17, 11: 18, 12: 19 }
-data = data.replace({name: start_age_mapping for name in data if name.startswith('start_age')})
+start_age_mapping = {
+    '.N': 'No Answer',
+    '.S': 'N/A',
+    '.Z': 'N/A',
+    1: 8,
+    2: 9,
+    3: 10,
+    4: 11,
+    5: 12,
+    6: 13,
+    7: 14,
+    8: 15,
+    9: 16,
+    10: 17,
+    11: 18,
+    12: 19
+}
+data = mapColumnValues(start_age_mapping, data, 'start_age')
+
 
 # PROCESS household_exposure data: consolidate tobacco types into cigarette, e-cigarette, other
 #
@@ -129,9 +259,10 @@ data['household_exposure_other'] = data[household_exposure_other_col_names].eq('
 data = data.drop(household_exposure_other_col_names, axis=1)
 
 #   4) convert values to boolean
-data = data.replace({name:{ '.N': False, '1': True } for name in data if name.startswith('household_exposure')})
+data = mapColumnValues({ '.N': False, '1': True }, data, 'household_exposure')
 new_household_exposure_col_names = [name for name in data if name.startswith('household_exposure')]
 data[new_household_exposure_col_names] = data[new_household_exposure_col_names].fillna(False)
+
 
 # convert data back to csv
 data.to_csv('../data/nyts2020_processed.csv', encoding='utf-8', index=False)
