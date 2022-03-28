@@ -1,22 +1,20 @@
 class Chart3 {
 
     constructor(_config, _data) {
+        this.selectionToKeyMapping = {
+            addictiveness: 'harm_addictiveness_e-cigarette',
+            occasional: 'harm_occasional_cigarettes',
+            nicotine: 'harm_low_nicotine'
+        };
         this.config = {
+            selection: _config.selection || Object.keys(this.selectionToKeyMapping)[0],
             parentElement: _config.parentElement,
-            containerWidth: _config.containerWidth || 800,
-            containerHeight: _config.containerHeight || 500,
-            margin: _config.margin || { top: 30, right: 5, bottom: 25, left: 100 },
+            containerWidth: _config.containerWidth || 900,
+            containerHeight: _config.containerHeight || 600,
+            margin: _config.margin || { top: 30, right: 5, bottom: 30, left: 130 },
         }
         this.data = _data;
-        // filter out undefined quit_for good and harm_addictiveness_e-cigarett values
-        this.data = this.data.filter(d => {
-            const quit_for_good = d.quit_for_good;
-            const harm_cigarette = d['harm_addictiveness_e-cigarette'];
-            return (quit_for_good !== 'N/A') && (quit_for_good !== 'Not Answered') &&
-                (harm_cigarette !== 'Not Answered') && (harm_cigarette !== 'Not enough info on product') &&
-                (harm_cigarette !== 'Never heard of product');
-        });
-        this.dataByAdditiveness = d3.groups(this.data, d => d['harm_addictiveness_e-cigarette']);
+        
         this.initVis();
     }
 
@@ -29,6 +27,7 @@ class Chart3 {
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
 
         vis.xScale = d3.scaleBand()
+            .domain(['Did not try to quit', '1 time', '2 times', '3 to 5 times', '6 to 9 times', '10 or more times'])
             .range([0, vis.width]);
 
         vis.yScale = d3.scaleBand()
@@ -36,14 +35,11 @@ class Chart3 {
 
         // Initialize axes
         vis.xAxis = d3.axisBottom(vis.xScale)
-            // .ticks(6)
-            // .tickSize(-vis.height - 10)
             .tickSizeOuter(0)
             .tickPadding(10);
 
         vis.yAxis = d3.axisLeft(vis.yScale)
-            // .ticks(7)
-            // .tickSize(-vis.width - 10)
+            .tickSizeInner(0)
             .tickSizeOuter(0)
             .tickPadding(10);
 
@@ -57,15 +53,40 @@ class Chart3 {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
+        vis.chart.append("rect")
+            .attr('width', vis.width)
+            .attr('height', vis.height - vis.config.margin.bottom)
+            .attr('fill', '#E6E6E6')
+            .attr('fill-opacity', '.2');
+
         // Append axis groups
         // Append empty x-axis group and move it to the bottom of the chart
         vis.xAxisGroup = vis.chart.append('g')
             .attr('class', 'x-axis axis')
-            .attr('transform', `translate(0, ${vis.height})`);
+            .attr('transform', `translate(0, ${vis.height - 30})`);
 
         // Append y-axis group
         vis.yAxisGroup = vis.chart.append('g')
             .attr('class', 'y-axis axis');
+
+        // Append x-axis title
+        vis.svg.append('text')
+            .attr('class', 'axis-title')
+            .attr('x', vis.config.margin.left - 10)
+            .attr('y', vis.config.margin.top - 10)
+            .attr("text-anchor", 'end')
+            .attr('dy', '1em')
+            .attr("font-weight", 'bold')
+            .text('Perception');
+
+        vis.svg.append('text')
+            .attr('class', 'axis-title')
+            .attr('x', vis.width - vis.config.margin.right - 20)
+            .attr('y', vis.height + vis.config.margin.bottom)
+            .attr("text-anchor", 'start')
+            .attr('dy', '1em')
+            .attr("font-weight", 'bold')
+            .text('# attempts at quitting');
 
         vis.updateVis();
 
@@ -76,11 +97,14 @@ class Chart3 {
         vis.xValue = d => d.quit_for_good;
         vis.yValue = d => d[0];
 
-        vis.xScale.domain(['Did not try to quit', '1 time', '2 times', '3 to 5 times', '6 to 9 times', '10 or more times']);
-        vis.yScale.domain(['Less addictive', 'Equally addictive', 'More addictive']);
-        // vis.xScale.domain([''])
-        // vis.xScale.domain([...new Set(this.data.map(d => d.quit_for_good))])
-
+        if (vis.config.selection === 'occasional') {
+            vis.yScale.domain(['No harm', 'Little harm', 'Some harm', 'A lot of harm']);
+        } else if (vis.config.selection === 'nicotine') {
+            vis.yScale.domain(['Much less harmful', 'Slightly less harmful', 'Equally harmful', 'Slightly more harmful', 'Much more harmful'])
+        } else {
+            vis.yScale.domain(['Less addictive', 'Equally addictive', 'More addictive']);
+        }
+        this.groupedData = d3.groups(this.data, d => d[this.selectionToKeyMapping[this.config.selection]]);
         vis.renderVis();
 
     }
@@ -89,21 +113,21 @@ class Chart3 {
         let vis = this;
 
         vis.bandWidthHalved = vis.width / 12;
-        vis.bandHeightHalved = vis.height / 6;
+        vis.bandHeightHalved = vis.height / (vis.yScale.domain().length * 2);
 
         // 1. Level: rows
         const rows = vis.chart.selectAll('.row')
-            .data(this.dataByAdditiveness, d => d[0])
+            .data(this.groupedData, d => d[0])
             .join('g')
             .attr('class', 'row')
-            .attr('transform', d => `translate(0,${vis.yScale(vis.yValue(d)) + (vis.bandHeightHalved/2)})`);
+            .attr('transform', d => `translate(0,${vis.yScale(vis.yValue(d)) + (vis.bandHeightHalved / 2)})`);
 
         // 2. Level: columns
         const columns = rows.selectAll('.column')
             .data(d => d[1].sort((a, b) => a.sex === 'Male' ? 1 : -1))
             .join('g')
             .attr('class', 'column')
-            .attr('transform', d => `translate(${vis.xScale(vis.xValue(d)) + (vis.bandWidthHalved/4)},0)`);
+            .attr('transform', d => `translate(${vis.xScale(vis.xValue(d)) + (vis.bandWidthHalved / 4)},0)`);
 
         const countsX = {};
         const countsY = {};
@@ -113,18 +137,18 @@ class Chart3 {
             .join('circle')
             .attr('class', 'point')
             .attr('cx', d => {
-                const countsKey = `${d.quit_for_good},${d['harm_addictiveness_e-cigarette']}`;
+                const countsKey = `${d.quit_for_good},${d[this.selectionToKeyMapping[this.config.selection]]}`;
                 if (countsX[countsKey] === undefined) countsX[countsKey] = 0;
                 else countsX[countsKey] = countsX[countsKey] + 1;
                 return (countsX[countsKey] % 15) * 6;
             })
             .attr('cy', d => {
-                const countsKey = `${d.quit_for_good},${d['harm_addictiveness_e-cigarette']}`;
+                const countsKey = `${d.quit_for_good},${d[this.selectionToKeyMapping[this.config.selection]]}`;
                 if (countsY[countsKey] === undefined) countsY[countsKey] = 0;
                 else countsY[countsKey] = countsY[countsKey] + 1;
                 return (Math.floor(countsY[countsKey] / 15)) * 6;
             })
-            .attr('r', 2)
+            .attr('r', 3)
             .attr('fill-opacity', '1')
             .style('stroke-width', '0.3')
             .style('stroke', '#FFF')
