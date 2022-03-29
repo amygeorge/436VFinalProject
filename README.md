@@ -6,3 +6,7 @@
 
 ### To run the python script
 `python process_data.py`
+
+## References
+
+- https://jaketrent.com/post/d3-class-operations

@@ -54,6 +54,47 @@
             nicotine content in modern tobacco products and being less harmful for health? How do these perceptions
             differ between genders? The interactive diagram below lists out the distribution of public option in youths.
         </h6>
+
+        <div class="mdc-form-field" id="chart3-main-filter">
+            <button class="mdc-button mdc-button--raised chart3-selection" id="chart3-selection-addictiveness">
+                <span class="mdc-button__label">E-cigarettes are less addictive than cigarettes</span>
+            </button>
+            <button class="mdc-button chart3-selection" id="chart3-selection-occasional">
+                <span class="mdc-button__label">Occasional smoking</span>
+            </button>
+            <button class="mdc-button chart3-selection" id="chart3-selection-nicotine">
+                <span class="mdc-button__label">Low-nicotine cigarettes</span>
+            </button>
+        </div>
+
+        <div id="chart3-subfilters">
+            <div class="mdc-form-field">
+                <button class="mdc-button mdc-button--raised race-selection-button" id="chart3-race-All" pressed>
+                    <span class="mdc-button__label">All</span>
+                </button>
+                <button class="mdc-button race-selection-button" id="chart3-race-Caucasian">
+                    <span class="mdc-button__label">Caucasian</span>
+                </button>
+                <button class="mdc-button race-selection-button" id="chart3-race-Non-Caucasian">
+                    <span class="mdc-button__label">Non-Caucasian</span>
+                </button>
+            </div>
+            <div class="mdc-form-field" id="chart3-gender-filter">
+                <div class="mdc-checkbox">
+                    <input type="checkbox" class="mdc-checkbox__native-control" id="chart3-gender-male" checked />
+                    <div class="mdc-checkbox__background"></div>
+                    <div class="mdc-checkbox__ripple"></div>
+                </div>
+                <label for="chart3-gender-male">Male</label>
+                <div class="mdc-checkbox">
+                    <input type="checkbox" class="mdc-checkbox__native-control" id="chart3-gender-female" checked />
+                    <div class="mdc-checkbox__background"></div>
+                    <div class="mdc-checkbox__ripple"></div>
+                </div>
+                <label for="chart3-gender-female">Female</label>
+            </div>
+        </div>
+
         <div class="chart-container" id="chart3-container"><svg id="chart3"></svg></div>
     </div>
 
