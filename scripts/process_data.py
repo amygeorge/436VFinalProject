@@ -239,10 +239,21 @@ start_age_mapping = {
     9: 16,
     10: 17,
     11: 18,
-    12: 19
+    12: 19,
+    '001': 8,
+    '002': 9,
+    '003': 10,
+    '004': 11,
+    '005': 12,
+    '006': 13,
+    '007': 14,
+    '008': 15,
+    '009': 16,
+    '010': 17,
+    '011': 18,
+    '012': 19
 }
 data = mapColumnValues(start_age_mapping, data, 'start_age')
-
 
 # PROCESS household_exposure data: consolidate tobacco types into cigarette, e-cigarette, other
 #

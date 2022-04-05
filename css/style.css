@@ -4,6 +4,27 @@ body {
 }
 
 /* color variables */
+/* view 2 */
+.category-household {
+  fill: #ff4747;
+}
+
+.category-access {
+  fill: #ffac33;
+}
+
+.category-social-media {
+  fill: #7137be;
+}
+
+.category-advertisement {
+  fill: #3fdd58;
+}
+
+.category-peers {
+  fill: #80c1f2;
+}
+
 .project-intro {
   text-align: center;
   margin: 5rem 0;
@@ -61,16 +82,26 @@ p {
   font-size: 14px;
 }
 
-/* chart 3 styles */
-/* gender selection checkbox colors */
-#chart3-gender-male.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, #chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-  border-color: #7137BE;
-  background-color: #7137BE;
+/*Chart 1 styles*/
+#chart1 .y-axis {
 }
 
-#chart3-gender-female.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, #chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-  border-color: #3FDD58;
-  background-color: #3FDD58;
+/* chart 3 styles */
+/* gender selection checkbox colors */
+#chart3-gender-male.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: #7137be;
+  background-color: #7137be;
+}
+
+#chart3-gender-female.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: #3fdd58;
+  background-color: #3fdd58;
 }
 
 #chart3-main-filter {
@@ -88,7 +119,8 @@ p {
 #chart3 {
   font-size: 1rem;
 }
-#chart3 .y-axis text, #chart3 .x-axis text {
+#chart3 .y-axis text,
+#chart3 .x-axis text {
   font-size: 1.2em;
 }
 #chart3 .y-axis .domain {

@@ -1,115 +1,138 @@
 body {
-    font-family: 'Roboto', 'sans-serif';
-    font-size: 1rem;
+  font-family: "Roboto", "sans-serif";
+  font-size: 1rem;
 }
 
 /* color variables */
-$green: #3FDD58;
-$purple: #7137BE;
-$orange: #FFAC33;
-$red: #FF4747;
-$blue: #80C1F2;
-$gray-light: #E7E7E7;
-$gray: #C4C4C4;
+$green: #3fdd58;
+$purple: #7137be;
+$orange: #ffac33;
+$red: #ff4747;
+$blue: #80c1f2;
+$gray-light: #e7e7e7;
+$gray: #c4c4c4;
 $white: #fff;
 $black: #000;
 
+/* view 2 */
+.category-household {
+  fill: $red;
+}
+.category-access {
+  fill: $orange;
+}
+.category-social-media {
+  fill: $purple;
+}
+.category-advertisement {
+  fill: $green;
+}
+.category-peers {
+  fill: $blue;
+}
+
 .project-intro {
-    text-align: center;
-    margin: 5rem 0;
+  text-align: center;
+  margin: 5rem 0;
 
-    .title-text {
-        display: inline-block;
-        width: 343px;
-        padding-left: 0.5em;
-        text-align: left;
+  .title-text {
+    display: inline-block;
+    width: 343px;
+    padding-left: 0.5em;
+    text-align: left;
+  }
 
-    }
-
-    .description {
-        display: inline-block;
-        width: 963px;
-        font-style: normal;
-        margin: 4rem 0;
-    }
+  .description {
+    display: inline-block;
+    width: 963px;
+    font-style: normal;
+    margin: 4rem 0;
+  }
 }
 
 .section {
-    padding: 0 15rem;
+  padding: 0 15rem;
 }
 
 /* headings */
 h1 {
-    font-size: 48px;
+  font-size: 48px;
 }
 
 h6 {
-    margin: 0 0;
-    font-size: 24px;
-    line-height: 33px;
-    font-weight: 400;
+  margin: 0 0;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
 }
 
 p {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 /* tooltip */
 #tooltip {
-    position: absolute;
-    display: none;
-    padding: 0.5rem 1rem;
-    background: $white;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    min-width: 302px;
+  position: absolute;
+  display: none;
+  padding: 0.5rem 1rem;
+  background: $white;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  min-width: 302px;
 
-    .tooltip-title {
-        font-size: 16px;
-        font-weight: 700;
-    }
+  .tooltip-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
 
-    ul {
-        margin: 5px 0 0 0;
-        padding-left: 20px;
-        font-size: 14px;
-    }
+  ul {
+    margin: 5px 0 0 0;
+    padding-left: 20px;
+    font-size: 14px;
+  }
 }
 
 /* chart 3 styles */
 
 /* gender selection checkbox colors */
-#chart3-gender-male.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, #chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-    border-color: $purple;
-    background-color: $purple;
+#chart3-gender-male.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: $purple;
+  background-color: $purple;
 }
 
-#chart3-gender-female.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background, #chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
-    border-color: $green;
-    background-color: $green;
+#chart3-gender-female.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: $green;
+  background-color: $green;
 }
 
 #chart3-main-filter {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 #chart3-subfilters {
-    margin: 2rem 0 2rem 0;
+  margin: 2rem 0 2rem 0;
 
-    #chart3-gender-filter {
-        margin-left: 2rem;
-        font-weight: bold;
-    }
+  #chart3-gender-filter {
+    margin-left: 2rem;
+    font-weight: bold;
+  }
 }
 
 #chart3 {
-    font-size: 1rem;
+  font-size: 1rem;
 
-    .y-axis text, .x-axis text {
-        font-size: 1.2em;
-    }
+  .y-axis text,
+  .x-axis text {
+    font-size: 1.2em;
+  }
 
-    .y-axis .domain {
-        display: none;
-    }
+  .y-axis .domain {
+    display: none;
+  }
 }
