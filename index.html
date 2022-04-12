@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html class="main-container">
   <head>
+    <link rel="icon" href="/assets/favicon.png" />
     <title>Youth Tobacco Use</title>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,6 +24,21 @@
   <body>
     <!-- Title and Intro -->
     <div class="project-intro">
+      <img
+        id="chat-bubble-grey"
+        src="assets/chat-bubble-grey.svg"
+        alt="chat-bubble-grey"
+      />
+      <img
+        id="chat-bubble-blue"
+        src="assets/chat-bubble-blue.svg"
+        alt="chat-bubble-blue"
+      />
+      <img
+        id="chat-bubble-green"
+        src="assets/chat-bubble-green.svg"
+        alt="chat-bubble-green"
+      />
       <div>
         <img src="assets/cigarette.png" alt="cigarette" />
         <h1 class="title-text">Tobacco Behaviours in Youth</h1>
@@ -39,131 +55,249 @@
     <!-- Visualization 1 -->
     <div class="section">
       <h2>
-        How likely are you to take tobacco if someone in your house also takes
-        tobacco?
+        🏡 How likely are you to consume tobacco if someone in your house also
+        consumes tobacco?
       </h2>
-      <h6>
-        Is taking tobacco a decision that is influenced by members of your
-        household? At what age is someone most likely to start taking tobacco?
-        Here, the chart shows a distribution of youths' start age of tobacco
-        consumption, types of tobacco consumption, and whether or not they have
-        tobacco users in their household.
-      </h6>
-      <div class="chart-container" id="chart1-container">
-        <svg id="chart1"></svg>
+      <p>
+        Is consuming tobacco a decision that is influenced by members of your
+        household? At what age is someone most likely to start consuming
+        tobacco? Here, the chart shows a distribution of youths' start age of
+        tobacco consumption, types of tobacco consumption, and whether or not
+        they have tobacco users in their household.
+      </p>
+
+      <div id="bar-chart-filters" class="chart-filters">
+        <div class="mdc-form-field">
+          <button
+            class="mdc-button mdc-button--raised tobacco-selection-button btn-colour-purple txt-colour-white btn-margin"
+            id="bar-chart-start_age"
+            pressed
+          >
+            <span class="mdc-button__label">All Tobacco Types</span>
+          </button>
+          <button
+            class="mdc-button tobacco-selection-button btn-margin btn-colour-red txt-colour-white"
+            id="#bar-chart-start_age_cigarette"
+          >
+            <span class="mdc-button__label">Cigarette</span>
+          </button>
+          <button
+            class="mdc-button tobacco-selection-button btn-margin btn-colour-yellow txt-colour-white"
+            id="#bar-chart-start_age_e-cigarette"
+          >
+            <span class="mdc-button__label">e-Cigarette</span>
+          </button>
+          <button
+            class="mdc-button tobacco-selection-button btn-margin btn-colour-green txt-colour-white"
+            id="#bar-chart-start_age_other"
+          >
+            <span class="mdc-button__label">Other Tobacco Types</span>
+          </button>
+        </div>
+
+        <div class="mdc-form-field" id="bar-chart-gender-filter">
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              id="bar-chart-gender-male"
+              checked
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="bar-chart-gender-male">Male</label>
+          <div class="mdc-checkbox">
+            <input
+              type="checkbox"
+              class="mdc-checkbox__native-control"
+              id="bar-chart-gender-female"
+              checked
+            />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+            </div>
+            <div class="mdc-checkbox__ripple"></div>
+          </div>
+          <label for="bar-chart-gender-female">Female</label>
+        </div>
+      </div>
+
+      <div class="chart-container" id="bar-chart-container">
+        <svg id="bar-chart-"></svg>
       </div>
     </div>
 
     <!-- Visualization 2 -->
     <div class="section">
-      <h2>What environmental factors influence tobacco consumption?</h2>
-      <h6>
+      <h2>🗣️ What environmental factors influence tobacco consumption?</h2>
+      <p>
         What has led youths to consume tobacco? Does being exposed to social
         media, ads in both the physical and digital plane, and being around your
         peers at school have an influence in youths' decision to consume
         tobacco? Are these factors intersectional? The chart below illustrates
         how external factors affect different youth groups.
-      </h6>
-      <div class="chart-container" id="chart2-container">
-        <div id="chart2"></div>
+      </p>
+      <div class="chart-container" id="venn-diagram-container">
+        <div id="venn-diagram-filters">
+          <div id="slider-simple">
+            <h4>Age group (years)</h4>
+          </div>
+          <div>
+            <ul class="venn-diagram-categories">
+              <li class="venn-diagram-category" category="household">
+                <span class="legend-symbol" category="household"></span>Someone
+                in your house smokes
+              </li>
+              <li class="venn-diagram-category" category="access">
+                <span class="legend-symbol" category="access"></span>Easy to
+                access
+              </li>
+              <li class="venn-diagram-category" category="social-media">
+                <span class="legend-symbol" category="social-media"></span>Saw
+                it a lot on social media
+              </li>
+              <li class="venn-diagram-category" category="curiosity">
+                <span class="legend-symbol" category="curiosity"></span>Curious
+                about it
+              </li>
+              <li class="venn-diagram-category" category="peers">
+                <span class="legend-symbol" category="peers"></span
+                >Peers/friends also smoke
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="venn-diagram"></div>
       </div>
     </div>
 
     <!-- Visualization 3 -->
     <div class="section">
-      <h2>How harmful do youths think tobacco is?</h2>
-      <h6>
+      <h2>❓ How harmful do youths think tobacco is?</h2>
+      <p>
         What are the perceptions of harm for young tobacco users? Do they take
         into account the frequency and nicotine content in modern tobacco
         products and being less harmful for health? How do these perceptions
         differ between genders? The interactive diagram below lists out the
         distribution of public option in youths.
-      </h6>
-      <div class="mdc-form-field" id="chart3-main-filter">
+      </p>
+
+      <div class="mdc-form-field chart-filters" id="scatter-chart-main-filter">
         <button
-          class="mdc-button mdc-button--raised chart3-selection"
-          id="chart3-selection-addictiveness"
+          class="mdc-button mdc-button--raised scatter-chart-selection"
+          id="scatter-chart-selection-addictiveness"
         >
           <span class="mdc-button__label"
             >E-cigarettes are less addictive than cigarettes</span
           >
         </button>
         <button
-          class="mdc-button chart3-selection"
-          id="chart3-selection-occasional"
+          class="mdc-button scatter-chart-selection"
+          id="scatter-chart-selection-occasional"
         >
           <span class="mdc-button__label">Occasional smoking</span>
         </button>
         <button
-          class="mdc-button chart3-selection"
-          id="chart3-selection-nicotine"
+          class="mdc-button scatter-chart-selection"
+          id="scatter-chart-selection-nicotine"
         >
           <span class="mdc-button__label">Low-nicotine cigarettes</span>
         </button>
       </div>
 
-      <div id="chart3-subfilters">
+      <div id="scatter-chart-subfilters" class="chart-filters">
         <div class="mdc-form-field">
           <button
             class="mdc-button mdc-button--raised race-selection-button"
-            id="chart3-race-All"
+            id="scatter-chart-race-All"
             pressed
           >
             <span class="mdc-button__label">All</span>
           </button>
           <button
             class="mdc-button race-selection-button"
-            id="chart3-race-Caucasian"
+            id="scatter-chart-race-Caucasian"
           >
             <span class="mdc-button__label">Caucasian</span>
           </button>
           <button
             class="mdc-button race-selection-button"
-            id="chart3-race-Non-Caucasian"
+            id="scatter-chart-race-Non-Caucasian"
           >
             <span class="mdc-button__label">Non-Caucasian</span>
           </button>
         </div>
-        <div class="mdc-form-field" id="chart3-gender-filter">
+        <div class="mdc-form-field" id="scatter-chart-gender-filter">
           <div class="mdc-checkbox">
             <input
               type="checkbox"
               class="mdc-checkbox__native-control"
-              id="chart3-gender-male"
+              id="scatter-chart-gender-male"
               checked
             />
-            <div class="mdc-checkbox__background"></div>
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+            </div>
             <div class="mdc-checkbox__ripple"></div>
           </div>
-          <label for="chart3-gender-male">Male</label>
+          <label for="scatter-chart-gender-male">Male</label>
           <div class="mdc-checkbox">
             <input
               type="checkbox"
               class="mdc-checkbox__native-control"
-              id="chart3-gender-female"
+              id="scatter-chart-gender-female"
               checked
             />
-            <div class="mdc-checkbox__background"></div>
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                <path
+                  class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+            </div>
             <div class="mdc-checkbox__ripple"></div>
           </div>
-          <label for="chart3-gender-female">Female</label>
+          <label for="scatter-chart-gender-female">Female</label>
         </div>
       </div>
 
-      <div class="chart-container" id="chart3-container">
-        <svg id="chart3"></svg>
+      <div class="chart-container" id="scatter-chart-container">
+        <svg id="scatter-chart"></svg>
       </div>
     </div>
 
     <div id="tooltip"></div>
-
+    <script src="https://unpkg.com/d3-simple-slider"></script>
     <script src="js/d3.v6.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/chart1.js"></script>
-    <script src="js/chart2.js"></script>
-    <script src="js/chart3.js"></script>
-    <script src="js/makeChart1.js"></script>
-    <script src="js/makeChart2.js"></script>
-    <script src="js/makeChart3.js"></script>
+    <script src="js/barChart.js"></script>
+    <script src="js/vennDiagram.js"></script>
+    <script src="js/scatterChart.js"></script>
+    <script src="js/makeBarChart.js"></script>
+    <script src="js/makeVennDiagram.js"></script>
+    <script src="js/makeScatterChart.js"></script>
   </body>
 </html>

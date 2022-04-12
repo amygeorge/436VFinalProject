@@ -1,34 +1,42 @@
+#chat-bubble-grey {
+  position: absolute;
+  left: 10em;
+}
+
+#chat-bubble-green {
+  position: absolute;
+  left: 8em;
+  top: 11em;
+}
+
+#chat-bubble-blue {
+  position: absolute;
+  left: 58em;
+  top: 10em;
+}
+
+.main-container {
+  width: auto;
+}
+
 body {
   font-family: "Roboto", "sans-serif";
   font-size: 1rem;
+  padding: 0 10rem;
+  min-width: 870px;
+  max-width: 1000px;
 }
 
-/* color variables */
-/* view 2 */
-.category-household {
-  fill: #ff4747;
-}
-
-.category-access {
-  fill: #ffac33;
-}
-
-.category-social-media {
-  fill: #7137be;
-}
-
-.category-advertisement {
-  fill: #3fdd58;
-}
-
-.category-peers {
-  fill: #80c1f2;
+.chart-filters {
+  display: flex !important;
+  justify-content: center;
 }
 
 .project-intro {
   text-align: center;
   margin: 5rem 0;
 }
+
 .project-intro .title-text {
   display: inline-block;
   width: 343px;
@@ -37,13 +45,12 @@ body {
 }
 .project-intro .description {
   display: inline-block;
-  width: 963px;
   font-style: normal;
   margin: 4rem 0;
 }
 
 .section {
-  padding: 0 15rem;
+  margin: 5rem 0;
 }
 
 /* headings */
@@ -75,46 +82,282 @@ p {
 #tooltip .tooltip-title {
   font-size: 16px;
 }
+
 #tooltip ul {
   margin: 5px 0 0 0;
   padding-left: 20px;
   font-size: 14px;
 }
 
-/* chart 3 styles */
+/*BarChart Styling*/
+
+/*
+BarChart Legend
+*/
+
 /* gender selection checkbox colors */
-#chart3-gender-male.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
-#chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
+#bar-chart-gender-male.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#bar-chart-gender-male.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: #868686;
+  background-color: #868686;
+}
+
+#bar-chart-gender-female.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#bar-chart-gender-female.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
+  border-color: #80c1f2;
+  background-color: #80c1f2;
+}
+
+#bar-chart-filters {
+  padding: 1rem 0;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+}
+
+/*custom colour definitions for bar chart buttons*/
+
+.btn-colour-purple {
+  border-color: #7137be !important;
+  background-color: #7137be !important;
+}
+
+.btn-colour-yellow {
+  border-color: #ff4747 !important;
+  background-color: #ff4747 !important;
+}
+
+.btn-colour-red {
+  border-color: #ffac33 !important;
+  background-color: #ffac33 !important;
+}
+
+.btn-colour-green {
+  border-color: #3fdd58 !important;
+  background-color: #3fdd58 !important;
+}
+
+.txt-colour-white {
+  color: white !important;
+}
+
+.btn-margin {
+  margin-right: 16px;
+}
+
+.axis-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* Chart 2 Styling */
+.mark {
+  transition: 0.5s;
+  transition-delay: 0.01s;
+}
+
+.mark:hover {
+  stroke-width: 1px;
+  stroke: #333;
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.1));
+}
+
+.parent-circle:hover {
+  fill: #f2f2f2;
+  opacity: 0.5;
+}
+
+#venn-diagram-container {
+  display: flex;
+  align-items: center;
+}
+
+.venn-diagram-categories {
+  text-align: left;
+  list-style: none;
+}
+
+.legend-symbol {
+  margin: 0.25em;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+#venn-diagram-filters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.venn-diagram-category {
+  display: flex;
+  align-items: center;
+  padding-right: 0.5em;
+  opacity: 0.8;
+  transition: 0.1s;
+}
+
+.venn-diagram-category.inactive {
+  opacity: 0.5;
+  transition: 0.1s;
+}
+
+.venn-diagram-category:hover {
+  border-radius: 5px;
+  background: #f2f2f2;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.venn-diagram-category[category="household"] .legend-symbol {
+  background: #ff4747;
+}
+
+#category-household {
+  fill: #ff4747;
+  opacity: 0.8;
+}
+#category-household:hover {
+  opacity: 1;
+}
+
+.venn-diagram-category[category="access"] .legend-symbol {
+  background: #ffac33;
+}
+
+#category-access {
+  fill: #ffac33;
+  opacity: 0.8;
+}
+#category-access:hover {
+  opacity: 1;
+}
+
+.venn-diagram-category[category="social-media"] .legend-symbol {
+  background: #7137be;
+}
+
+#category-social-media {
+  fill: #7137be;
+  opacity: 0.8;
+}
+#category-social-media:hover {
+  opacity: 1;
+}
+
+.venn-diagram-category[category="curiosity"] .legend-symbol {
+  background: #3fdd58;
+}
+
+#category-curiosity {
+  fill: #3fdd58;
+  opacity: 0.8;
+}
+#category-curiosity:hover {
+  opacity: 1;
+}
+
+.venn-diagram-category[category="peers"] .legend-symbol {
+  background: #80c1f2;
+}
+
+#category-peers {
+  fill: #80c1f2;
+  opacity: 0.8;
+}
+#category-peers:hover {
+  opacity: 1;
+}
+
+#slider-simple {
+  text-align: center;
+}
+
+/* headings */
+h1 {
+  font-size: 48px;
+}
+
+h6 {
+  margin: 0 0;
+  font-size: 24px;
+  line-height: 33px;
+  font-weight: 400;
+}
+
+p {
+  font-size: 18px;
+}
+
+/* tooltip */
+#tooltip {
+  position: absolute;
+  display: none;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  min-width: 200px;
+  max-width: 500px;
+  text-align: left;
+}
+#tooltip .tooltip-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+#tooltip ul {
+  margin: 5px 0 0 0;
+  padding-left: 20px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* scatter chart styles */
+/* gender selection checkbox colors */
+#scatter-chart-gender-male.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#scatter-chart-gender-male.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
   border-color: #7137be;
   background-color: #7137be;
 }
 
-#chart3-gender-female.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
-#chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
+#scatter-chart-gender-female.mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+#scatter-chart-gender-female.mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background {
   border-color: #3fdd58;
   background-color: #3fdd58;
 }
 
-#chart3-main-filter {
+#scatter-chart-main-filter {
   margin-top: 2rem;
 }
 
-#chart3-subfilters {
+#scatter-chart-subfilters {
   margin: 2rem 0 2rem 0;
 }
-#chart3-subfilters #chart3-gender-filter {
+#scatter-chart-subfilters #scatter-chart-gender-filter {
   margin-left: 2rem;
   font-weight: bold;
 }
 
-#chart3 {
+#scatter-chart {
   font-size: 1rem;
 }
-#chart3 .y-axis text,
-#chart3 .x-axis text {
+#scatter-chart .y-axis text,
+#scatter-chart .x-axis text {
   font-size: 1.2em;
 }
-#chart3 .y-axis .domain {
+#scatter-chart .y-axis .domain {
   display: none;
 }
 

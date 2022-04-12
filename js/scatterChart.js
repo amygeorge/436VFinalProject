@@ -1,4 +1,4 @@
-class Chart3 {
+class ScatterChart {
   constructor(_config, _data) {
     this.selectionToKeyMapping = {
       addictiveness: "harm_addictiveness_e-cigarette",
@@ -109,7 +109,7 @@ class Chart3 {
     vis.svg
       .append("text")
       .attr("class", "axis-title")
-      .attr("x", vis.width - vis.config.margin.right - 20)
+      .attr("x", vis.width - vis.config.margin.right - 60)
       .attr("y", vis.height + vis.config.margin.bottom)
       .attr("text-anchor", "start")
       .attr("dy", "1em")
@@ -242,21 +242,21 @@ class Chart3 {
         // calculate tooltip counts
         const groupedCountsByGender =
           vis.groupedCountsByGender[yValue].get(xValue);
-        const maleCount = groupedCountsByGender.get("Male");
-        const femaleCount = groupedCountsByGender.get("Female");
+        const maleCount = groupedCountsByGender.get("Male") || 0;
+        const femaleCount = groupedCountsByGender.get("Female") || 0;
         const count = maleCount + femaleCount;
 
-        const malePercentage = chart3Filters.sex_Female
+        const malePercentage = scatterChartFilters.sex_Female
           ? `(${vis.convertToPercent(maleCount, count)}%)`
           : "";
-        const femalePercentage = chart3Filters.sex_Male
+        const femalePercentage = scatterChartFilters.sex_Male
           ? `(${vis.convertToPercent(femaleCount, count)}%)`
           : "";
         const percentageCount = vis.convertToPercent(count, totalCountInGroup);
         d3
           .select("#tooltip")
           .style("display", "block")
-          .style(event.pageX > vis.width ? "right" : "left", event.pageX + "px")
+          .style("left", event.pageX + "px")
           .style("top", event.pageY + "px").html(`
           <div class="tooltip-title">
             <b>${count} out of ${totalCountInGroup} (${percentageCount}%)</b> who perceive ${tooltipTitleText}
@@ -264,12 +264,12 @@ class Chart3 {
           </div>
           <ul>
             ${
-              chart3Filters.sex_Male
+              scatterChartFilters.sex_Male
                 ? `<li>Male: ${maleCount} ${malePercentage}</li>`
                 : ""
             }
             ${
-              chart3Filters.sex_Female
+              scatterChartFilters.sex_Female
                 ? `<li>Female: ${femaleCount} ${femalePercentage}</li>`
                 : ""
             }

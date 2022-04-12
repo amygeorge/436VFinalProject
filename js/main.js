@@ -1,19 +1,25 @@
 csvFile = "./data/nyts2020_processed.csv";
 
-let chart1;
-let chart2;
-let chart3;
+let barChart;
+let vennDiagram;
+let scatterChart;
 
 d3.csv(csvFile)
   .then((data) => {
-    chart1 = new Chart1({ parentElement: "#chart1" }, prepChart1Data(data));
-    chart2 = new VennDiagram(
-      { parentElement: "#chart2" },
-      prepChart2Data(data)
+    barChart = new BarChart(
+      { parentElement: "#bar-chart-" },
+      prepBarChartData(data)
     );
-    chart3 = new Chart3({ parentElement: "#chart3" }, prepChart3Data(data));
-    makeChart1();
-    makeChart2();
-    makeChart3(data);
+    vennDiagram = new VennDiagram(
+      { parentElement: "#venn-diagram" },
+      prepVennDiagramData(data)
+    );
+    scatterChart = new ScatterChart(
+      { parentElement: "#scatter-chart" },
+      prepScatterChartData(data)
+    );
+    makeBarChart(data);
+    makeVennDiagram(data);
+    makeScatterChart(data);
   })
   .catch((error) => console.error(error));
