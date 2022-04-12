@@ -70,11 +70,10 @@ p {
   background: #fff;
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  min-width: 302px;
+  width: 400px;
 }
 #tooltip .tooltip-title {
   font-size: 16px;
-  font-weight: 700;
 }
 #tooltip ul {
   margin: 5px 0 0 0;
@@ -82,24 +81,16 @@ p {
   font-size: 14px;
 }
 
-/*Chart 1 styles*/
-#chart1 .y-axis {
-}
-
 /* chart 3 styles */
 /* gender selection checkbox colors */
-#chart3-gender-male.mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-#chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate
-  ~ .mdc-checkbox__background {
+#chart3-gender-male.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
+#chart3-gender-male.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
   border-color: #7137be;
   background-color: #7137be;
 }
 
-#chart3-gender-female.mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-#chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate
-  ~ .mdc-checkbox__background {
+#chart3-gender-female.mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background,
+#chart3-gender-female.mdc-checkbox__native-control:enabled:indeterminate ~ .mdc-checkbox__background {
   border-color: #3fdd58;
   background-color: #3fdd58;
 }
