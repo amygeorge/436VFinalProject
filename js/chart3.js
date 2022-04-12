@@ -5,6 +5,13 @@ class Chart3 {
       occasional: "harm_occasional_cigarettes",
       nicotine: "harm_low_nicotine",
     };
+    this.tooltipMessageMapping = {
+      addictiveness:
+        "e-cigarettes to be <b>PLACEHOLDER</b> compared to cigarettes",
+      occasional: "occasional smoking causes <b>PLACEHOLDER</b>",
+      nicotine:
+        "low-nicotine cigarettes to be <b>PLACEHOLDER</b> compared to regular cigaretes",
+    };
     this.config = {
       selection:
         _config.selection || Object.keys(this.selectionToKeyMapping)[0],
@@ -14,6 +21,7 @@ class Chart3 {
       margin: _config.margin || { top: 30, right: 5, bottom: 30, left: 130 },
     };
     this.data = _data;
+    this.groupedCountsByGender = {};
 
     this.initVis();
   }
@@ -138,9 +146,19 @@ class Chart3 {
         "More addictive",
       ]);
     }
-    this.groupedData = d3.groups(
+    vis.groupedData = d3.groups(
       this.data,
       (d) => d[this.selectionToKeyMapping[this.config.selection]]
+    );
+    vis.groupedCountsByGender = {};
+    vis.groupedData.forEach(
+      (g) =>
+        (vis.groupedCountsByGender[g[0]] = d3.rollup(
+          g[1],
+          (v) => v.length,
+          (d) => vis.xValue(d),
+          (d) => d.sex
+        ))
     );
     vis.renderVis();
   }
@@ -201,11 +219,77 @@ class Chart3 {
       })
       .attr("r", 3)
       .attr("fill-opacity", "1")
-      .style("stroke-width", "0.3")
-      .style("stroke", "#FFF")
       .style("fill", (d) => (d.sex === "Male" ? "#7137BE" : "#3FDD58"));
+
+    columns
+      .on("mouseover", (event, d) => {
+        const xValue = vis.xValue(d);
+        const yValue = d[vis.selectionToKeyMapping[vis.config.selection]];
+
+        const totalCountInGroup = this.groupedData.find(
+          (g) => g[0] === yValue
+        )[1].length;
+
+        // tooltip text
+        const tooltipTitleText = vis.tooltipMessageMapping[
+          vis.config.selection
+        ].replace("PLACEHOLDER", yValue.toLowerCase());
+        const quitInfo =
+          xValue !== vis.xScale.domain()[0]
+            ? `tried to quit ${xValue.toLowerCase()}`
+            : xValue.toLowerCase();
+
+        // calculate tooltip counts
+        const groupedCountsByGender =
+          vis.groupedCountsByGender[yValue].get(xValue);
+        const maleCount = groupedCountsByGender.get("Male");
+        const femaleCount = groupedCountsByGender.get("Female");
+        const count = maleCount + femaleCount;
+
+        const malePercentage = chart3Filters.sex_Female
+          ? `(${vis.convertToPercent(maleCount, count)}%)`
+          : "";
+        const femalePercentage = chart3Filters.sex_Male
+          ? `(${vis.convertToPercent(femaleCount, count)}%)`
+          : "";
+        const percentageCount = vis.convertToPercent(count, totalCountInGroup);
+        d3
+          .select("#tooltip")
+          .style("display", "block")
+          .style(event.pageX > vis.width ? "right" : "left", event.pageX + "px")
+          .style("top", event.pageY + "px").html(`
+          <div class="tooltip-title">
+            <b>${count} out of ${totalCountInGroup} (${percentageCount}%)</b> who perceive ${tooltipTitleText}
+            <i>${quitInfo}</i>
+          </div>
+          <ul>
+            ${
+              chart3Filters.sex_Male
+                ? `<li>Male: ${maleCount} ${malePercentage}</li>`
+                : ""
+            }
+            ${
+              chart3Filters.sex_Female
+                ? `<li>Female: ${femaleCount} ${femalePercentage}</li>`
+                : ""
+            }
+          </ul>
+        `);
+      })
+      .on("mouseleave", () => {
+        d3.select("#tooltip").style("display", "none");
+      });
 
     vis.xAxisGroup.call(vis.xAxis);
     vis.yAxisGroup.call(vis.yAxis);
+  }
+
+  /**
+   * converts value to percentage with 2 decimal points
+   * @param {Number} value
+   * @param {Number} total
+   */
+  convertToPercent(value, total) {
+    return ((value / total) * 100).toFixed(2);
   }
 }
